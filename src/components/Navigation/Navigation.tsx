@@ -1,16 +1,25 @@
 import styles from "./Navigation.module.css";
+import { NavLink } from "react-router-dom";
 
 export function Navigation() {
   return (
     <nav className={styles.navigation}>
       <ul>
         <li>
-          <a href="#" className={styles.active}>
-            Link 1
-          </a>
+          <NavLink
+            className={({ isActive }) => (isActive ? styles.active : "")}
+            to="/"
+          >
+            Profile
+          </NavLink>
         </li>
         <li>
-          <a href="#">Link 2</a>
+          <NavLink
+            className={({ isActive }) => (isActive ? styles.active : "")}
+            to="/dialogs"
+          >
+            Dialogs
+          </NavLink>
         </li>
         <li>
           <a href="#">Link 3</a>

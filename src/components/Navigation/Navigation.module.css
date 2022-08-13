@@ -4,6 +4,15 @@
   padding: 3rem;
 }
 
+.navigation ul {
+  display: grid;
+  gap: 1rem;
+}
+
 .active {
   color: inherit;
+}
+
+.navigation a {
+  text-decoration: none;
 }

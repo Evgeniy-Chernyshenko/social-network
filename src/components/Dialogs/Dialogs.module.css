@@ -1,0 +1,57 @@
+.dialogs {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 3rem;
+}
+
+.active {
+  color: inherit;
+}
+
+.users {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  padding-right: 3rem;
+  border-right: 1px solid #c8c8c8;
+}
+
+.messages {
+  display: grid;
+  gap: 3rem;
+}
+
+.messages > div {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  align-items: end;
+  gap: 1.5rem;
+  justify-items: start;
+}
+
+.messages img {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.messages p {
+  background: #444444;
+  color: #fff;
+  padding: 1.5rem 3rem;
+  position: relative;
+  border-radius: 1rem 1rem 1rem 0;
+}
+
+.messages p::before {
+  content: "";
+  width: 4rem;
+  height: 4rem;
+  position: absolute;
+  left: -4rem;
+  bottom: 0;
+  border-radius: 0 0 50% 0;
+  box-shadow: 2rem 0 0 #444444;
+  z-index: -1;
+}
