@@ -1,3 +1,5 @@
+import { renderEntireTree } from "../render";
+
 export type PostType = {
   id: number;
   text: string;
@@ -84,4 +86,12 @@ export const rootState = {
       },
     ],
   },
+};
+
+export type AddPostType = (text: string) => void;
+
+export const addPost: AddPostType = (text) => {
+  rootState.profilePage.posts.push({ id: Date.now(), text, likesCount: 0 });
+
+  renderEntireTree(rootState, addPost);
 };
