@@ -1,32 +1,41 @@
-import React from "react";
-import { AddPostType, PostType } from "../../../redux/state";
+import React, { ChangeEvent } from "react";
+import {
+  AddPostType,
+  PostType,
+  ProfilePageType,
+  UpdateNewPostTextType,
+} from "../../../redux/store";
 import { Post } from "./Post/Post";
 import styles from "./Posts.module.css";
 
 type PropsType = {
-  state: PostType[];
+  posts: PostType[];
+  newPostText: string;
   addPost: AddPostType;
+  updateNewPostText: UpdateNewPostTextType;
 };
 
 export function Posts(props: PropsType) {
-  const textareaRef = React.createRef<HTMLTextAreaElement>();
-
-  const postsElements = props.state.map((post) => (
+  const postsElements = props.posts.map((post) => (
     <Post key={post.id} text={post.text} likesCount={post.likesCount} />
   ));
 
   const onAddPostClickHandler = () => {
-    if (textareaRef.current) {
-      const clearText = textareaRef.current.value.trim();
-      clearText && props.addPost(clearText);
-      textareaRef.current.value = "";
-    }
+    props.addPost();
+  };
+
+  const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    props.updateNewPostText(e.currentTarget.value);
   };
 
   return (
     <div className={styles.posts}>
       <h2>My posts</h2>
-      <textarea ref={textareaRef} placeholder="Type text here..."></textarea>
+      <textarea
+        placeholder="Type text here..."
+        onChange={changeNewPostTextHandler}
+        value={props.newPostText}
+      ></textarea>
       <button
         className="button my-posts__form-button"
         onClick={onAddPostClickHandler}

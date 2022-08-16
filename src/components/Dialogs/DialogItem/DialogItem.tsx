@@ -1,20 +1,20 @@
 import { NavLink } from "react-router-dom";
-import { MessageType, UserType } from "../../../redux/state";
+import { UserType } from "../../../redux/store";
 import styles from "./DialogItem.module.css";
 
 type PropsType = {
-  state: UserType;
+  user: UserType;
 };
 
 export function DialogItem(props: PropsType) {
   return (
     <li className={styles.container}>
-      <img src={props.state.userPic} alt={props.state.name} />
+      <img src={props.user.userPic} alt={props.user.name} />
       <NavLink
-        to={`/dialogs/${props.state.id}`}
+        to={`/dialogs/${props.user.id}`}
         className={({ isActive }) => (isActive ? styles.active : "")}
       >
-        {props.state.name}
+        {props.user.name}
       </NavLink>
     </li>
   );

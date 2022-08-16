@@ -3,11 +3,12 @@ import { Navigation } from "./components/Navigation/Navigation";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Profile } from "./components/Profile/Profile";
 import { Dialogs } from "./components/Dialogs/Dialogs";
-import { AddPostType, RootStateType } from "./redux/state";
+import { AddPostType, StateType, UpdateNewPostTextType } from "./redux/store";
 
 type PropsType = {
-  state: RootStateType;
+  state: StateType;
   addPost: AddPostType;
+  updateNewPostText: UpdateNewPostTextType;
 };
 
 function App(props: PropsType) {
@@ -23,18 +24,19 @@ function App(props: PropsType) {
               index
               element={
                 <Profile
-                  state={props.state.profilePage}
+                  profilePage={props.state.profilePage}
                   addPost={props.addPost}
+                  updateNewPostText={props.updateNewPostText}
                 />
               }
             />
             <Route
               path="/dialogs"
-              element={<Dialogs state={props.state.dialogsPage} />}
+              element={<Dialogs dialogsPage={props.state.dialogsPage} />}
             >
               <Route
                 path=":userId"
-                element={<Dialogs state={props.state.dialogsPage} />}
+                element={<Dialogs dialogsPage={props.state.dialogsPage} />}
               />
             </Route>
           </Routes>

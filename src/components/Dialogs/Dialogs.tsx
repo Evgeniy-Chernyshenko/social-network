@@ -1,18 +1,18 @@
-import { DialogsPageType } from "../../redux/state";
+import { DialogsPageType } from "../../redux/store";
 import { DialogItem } from "./DialogItem/DialogItem";
 import styles from "./Dialogs.module.css";
 import { MessageItem } from "./MessageItem/MessageItem";
 
 type PropsType = {
-  state: DialogsPageType;
+  dialogsPage: DialogsPageType;
 };
 
 export function Dialogs(props: PropsType) {
-  const dialogItems = props.state.users.map((user) => (
-    <DialogItem state={user} />
+  const dialogItems = props.dialogsPage.users.map((user) => (
+    <DialogItem user={user} />
   ));
-  const messageItems = props.state.messages.map((message) => (
-    <MessageItem state={message} />
+  const messageItems = props.dialogsPage.messages.map((message) => (
+    <MessageItem message={message} />
   ));
 
   return (

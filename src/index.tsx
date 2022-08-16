@@ -2,10 +2,27 @@ import "./reset.css";
 import "./normalize.css";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { renderEntireTree } from "./render";
-import { rootState, addPost } from "./redux/state";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { store } from "./redux/store";
 
-renderEntireTree(rootState, addPost);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+export const renderEntireTree = () => {
+  root.render(
+    <App
+      state={store.getState()}
+      addPost={store.addPost.bind(store)}
+      updateNewPostText={store.updateNewPostText.bind(store)}
+    />
+  );
+};
+
+store.subscribe(renderEntireTree);
+
+renderEntireTree();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
