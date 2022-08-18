@@ -1,9 +1,9 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import {
-  AddPostType,
+  addPostAC,
+  DispatchType,
   PostType,
-  ProfilePageType,
-  UpdateNewPostTextType,
+  updateNewPostTextAC,
 } from "../../../redux/store";
 import { Post } from "./Post/Post";
 import styles from "./Posts.module.css";
@@ -11,8 +11,7 @@ import styles from "./Posts.module.css";
 type PropsType = {
   posts: PostType[];
   newPostText: string;
-  addPost: AddPostType;
-  updateNewPostText: UpdateNewPostTextType;
+  dispatch: DispatchType;
 };
 
 export function Posts(props: PropsType) {
@@ -21,11 +20,11 @@ export function Posts(props: PropsType) {
   ));
 
   const onAddPostClickHandler = () => {
-    props.addPost();
+    props.dispatch(addPostAC());
   };
 
   const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.updateNewPostText(e.currentTarget.value);
+    props.dispatch(updateNewPostTextAC(e.currentTarget.value));
   };
 
   return (

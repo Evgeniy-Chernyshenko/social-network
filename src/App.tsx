@@ -3,12 +3,11 @@ import { Navigation } from "./components/Navigation/Navigation";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Profile } from "./components/Profile/Profile";
 import { Dialogs } from "./components/Dialogs/Dialogs";
-import { AddPostType, StateType, UpdateNewPostTextType } from "./redux/store";
+import { DispatchType, StateType } from "./redux/store";
 
 type PropsType = {
   state: StateType;
-  addPost: AddPostType;
-  updateNewPostText: UpdateNewPostTextType;
+  dispatch: DispatchType;
 };
 
 function App(props: PropsType) {
@@ -25,18 +24,27 @@ function App(props: PropsType) {
               element={
                 <Profile
                   profilePage={props.state.profilePage}
-                  addPost={props.addPost}
-                  updateNewPostText={props.updateNewPostText}
+                  dispatch={props.dispatch}
                 />
               }
             />
             <Route
               path="/dialogs"
-              element={<Dialogs dialogsPage={props.state.dialogsPage} />}
+              element={
+                <Dialogs
+                  dialogsPage={props.state.dialogsPage}
+                  dispatch={props.dispatch}
+                />
+              }
             >
               <Route
                 path=":userId"
-                element={<Dialogs dialogsPage={props.state.dialogsPage} />}
+                element={
+                  <Dialogs
+                    dialogsPage={props.state.dialogsPage}
+                    dispatch={props.dispatch}
+                  />
+                }
               />
             </Route>
           </Routes>

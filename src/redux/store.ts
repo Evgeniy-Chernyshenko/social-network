@@ -1,3 +1,6 @@
+import { dialogsReducer } from "./dialogs-reducer";
+import { profileReducer } from "./profile-reducer";
+
 export type PostType = {
   id: number;
   text: string;
@@ -25,6 +28,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
   users: UserType[];
   messages: MessageType[];
+  newMessageText: string;
 };
 
 export type StateType = {
@@ -40,14 +44,21 @@ type CallbackType = () => void;
 
 type SubscribeType = (callback: CallbackType) => void;
 
+export type DispatchType = (action: ActionTypes) => void;
+
 type StoreType = {
   _state: StateType;
+  _callSubscriber: CallbackType;
   getState: () => StateType;
   subscribe: SubscribeType;
-  addPost: AddPostType;
-  updateNewPostText: UpdateNewPostTextType;
-  _onChange: CallbackType;
+  dispatch: DispatchType;
 };
+
+export type ActionTypes =
+  | ReturnType<typeof updateNewPostTextAC>
+  | ReturnType<typeof addPostAC>
+  | ReturnType<typeof updateNewMessageTextAC>
+  | ReturnType<typeof addMessageAC>;
 
 export const store: StoreType = {
   _state: {
@@ -103,38 +114,36 @@ export const store: StoreType = {
           text: "Message text 3",
         },
       ],
+      newMessageText: "",
     },
   },
-  addPost() {
-    const clearText = this._state.profilePage.newPostText.trim();
-
-    if (clearText) {
-      this._state.profilePage.posts.push({
-        id: Date.now(),
-        text: clearText,
-        likesCount: 0,
-      });
-
-      console.log(this._state.profilePage.posts);
-
-      this._state.profilePage.newPostText = "";
-
-      this._onChange();
-    }
-  },
-  updateNewPostText(text: string) {
-    this._state.profilePage.newPostText = text;
-
-    this._onChange();
-  },
-  _onChange: () => {},
+  _callSubscriber: () => {},
   subscribe(callback) {
-    this._onChange = callback;
+    this._callSubscriber = callback;
   },
   getState() {
     return this._state;
   },
+  dispatch(action) {
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+
+    this._callSubscriber();
+  },
 };
+
+export const updateNewPostTextAC = (text: string) =>
+  ({
+    type: "UPDATE-NEW-POST-TEXT",
+    text,
+  } as const);
+export const addPostAC = () => ({ type: "ADD-POST" } as const);
+export const updateNewMessageTextAC = (text: string) =>
+  ({
+    type: "UPDATE-NEW-MESSAGE-TEXT",
+    text,
+  } as const);
+export const addMessageAC = () => ({ type: "ADD-MESSAGE" } as const);
 
 declare const window: any;
 window.state = store._state;
