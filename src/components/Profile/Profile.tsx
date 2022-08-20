@@ -1,10 +1,12 @@
-import { DispatchType, ProfilePageType } from "../../redux/store";
+import { StateType } from "../../redux/redux-store";
 import { Posts } from "./Posts/Posts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
 
 type PropsType = {
-  profilePage: ProfilePageType;
-  dispatch: DispatchType;
+  posts: StateType["profilePage"]["posts"];
+  newPostText: string;
+  updateNewPostTexCallback: (newPostText: string) => void;
+  addPostCallback: () => void;
 };
 
 export function Profile(props: PropsType) {
@@ -12,9 +14,10 @@ export function Profile(props: PropsType) {
     <>
       <ProfileInfo />
       <Posts
-        posts={props.profilePage.posts}
-        newPostText={props.profilePage.newPostText}
-        dispatch={props.dispatch}
+        posts={props.posts}
+        newPostText={props.newPostText}
+        updateNewPostTexCallback={props.updateNewPostTexCallback}
+        addPostCallback={props.addPostCallback}
       />
     </>
   );

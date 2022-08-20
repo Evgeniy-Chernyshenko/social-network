@@ -1,33 +1,29 @@
 import { ChangeEvent } from "react";
-import {
-  addMessageAC,
-  DialogsPageType,
-  DispatchType,
-  updateNewMessageTextAC,
-} from "../../redux/store";
+import { StateType } from "../../redux/redux-store";
 import { DialogItem } from "./DialogItem/DialogItem";
 import styles from "./Dialogs.module.css";
 import { MessageItem } from "./MessageItem/MessageItem";
 
 type PropsType = {
-  dialogsPage: DialogsPageType;
-  dispatch: DispatchType;
+  dialogsPage: StateType["dialogsPage"];
+  updateNewMessageTextCallback: (newMessageText: string) => void;
+  addMessageCallback: () => void;
 };
 
 export function Dialogs(props: PropsType) {
   const dialogItems = props.dialogsPage.users.map((user) => (
-    <DialogItem user={user} />
+    <DialogItem key={user.id} user={user} />
   ));
   const messageItems = props.dialogsPage.messages.map((message) => (
-    <MessageItem message={message} />
+    <MessageItem key={message.id} message={message} />
   ));
 
   const changeNewMessageTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch(updateNewMessageTextAC(e.currentTarget.value));
+    props.updateNewMessageTextCallback(e.currentTarget.value);
   };
 
   const onAddMessageClickHandler = () => {
-    props.dispatch(addMessageAC());
+    props.addMessageCallback();
   };
 
   return (

@@ -6,7 +6,7 @@ export function ProfileInfo() {
       <img
         className={styles.headImage}
         src="https://c.wallhere.com/photos/dd/ab/landscape_field-15790.jpg!d"
-        alt="Image"
+        alt="Best"
       />
 
       <div className={styles.userInfo}>

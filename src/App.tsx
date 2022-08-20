@@ -1,55 +1,33 @@
 import { Header } from "./components/Header/Header";
 import { Navigation } from "./components/Navigation/Navigation";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Profile } from "./components/Profile/Profile";
-import { Dialogs } from "./components/Dialogs/Dialogs";
-import { DispatchType, StateType } from "./redux/store";
+import { StoreType } from "./redux/redux-store";
+import { ProfileContainer } from "./components/Profile/ProfileContainer";
+import { DialogsContainer } from "./components/Dialogs/DialogsContainer";
+import { StoreProvider } from "./StoreContext";
 
 type PropsType = {
-  state: StateType;
-  dispatch: DispatchType;
+  store: StoreType;
 };
 
 function App(props: PropsType) {
   return (
     <BrowserRouter>
-      <div className="wrapper">
-        <Header />
-        <Navigation />
+      <StoreProvider store={props.store}>
+        <div className="wrapper">
+          <Header />
+          <Navigation />
 
-        <main className="content">
-          <Routes>
-            <Route
-              index
-              element={
-                <Profile
-                  profilePage={props.state.profilePage}
-                  dispatch={props.dispatch}
-                />
-              }
-            />
-            <Route
-              path="/dialogs"
-              element={
-                <Dialogs
-                  dialogsPage={props.state.dialogsPage}
-                  dispatch={props.dispatch}
-                />
-              }
-            >
-              <Route
-                path=":userId"
-                element={
-                  <Dialogs
-                    dialogsPage={props.state.dialogsPage}
-                    dispatch={props.dispatch}
-                  />
-                }
-              />
-            </Route>
-          </Routes>
-        </main>
-      </div>
+          <main className="content">
+            <Routes>
+              <Route index element={<ProfileContainer />} />
+              <Route path="/dialogs" element={<DialogsContainer />}>
+                <Route path=":userId" element={<DialogsContainer />} />
+              </Route>
+            </Routes>
+          </main>
+        </div>
+      </StoreProvider>
     </BrowserRouter>
   );
 }

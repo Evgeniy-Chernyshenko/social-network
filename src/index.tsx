@@ -4,16 +4,14 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { store } from "./redux/store";
+import { store } from "./redux/redux-store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 export const renderEntireTree = () => {
-  root.render(
-    <App state={store.getState()} dispatch={store.dispatch.bind(store)} />
-  );
+  root.render(<App store={store} />);
 };
 
 store.subscribe(renderEntireTree);

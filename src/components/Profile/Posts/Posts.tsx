@@ -1,17 +1,13 @@
 import { ChangeEvent } from "react";
-import {
-  addPostAC,
-  DispatchType,
-  PostType,
-  updateNewPostTextAC,
-} from "../../../redux/store";
+import { StateType } from "../../../redux/redux-store";
 import { Post } from "./Post/Post";
 import styles from "./Posts.module.css";
 
 type PropsType = {
-  posts: PostType[];
+  posts: StateType["profilePage"]["posts"];
   newPostText: string;
-  dispatch: DispatchType;
+  updateNewPostTexCallback: (newPostText: string) => void;
+  addPostCallback: () => void;
 };
 
 export function Posts(props: PropsType) {
@@ -19,12 +15,12 @@ export function Posts(props: PropsType) {
     <Post key={post.id} text={post.text} likesCount={post.likesCount} />
   ));
 
-  const onAddPostClickHandler = () => {
-    props.dispatch(addPostAC());
+  const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    props.updateNewPostTexCallback(e.currentTarget.value);
   };
 
-  const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch(updateNewPostTextAC(e.currentTarget.value));
+  const onAddPostClickHandler = () => {
+    props.addPostCallback();
   };
 
   return (
