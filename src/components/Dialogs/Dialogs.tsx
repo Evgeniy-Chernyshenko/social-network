@@ -1,16 +1,10 @@
 import { ChangeEvent } from "react";
-import { StateType } from "../../redux/redux-store";
 import { DialogItem } from "./DialogItem/DialogItem";
 import styles from "./Dialogs.module.css";
+import { DialogsPropsType } from "./DialogsContainer";
 import { MessageItem } from "./MessageItem/MessageItem";
 
-type PropsType = {
-  dialogsPage: StateType["dialogsPage"];
-  updateNewMessageTextCallback: (newMessageText: string) => void;
-  addMessageCallback: () => void;
-};
-
-export function Dialogs(props: PropsType) {
+export function Dialogs(props: DialogsPropsType) {
   const dialogItems = props.dialogsPage.users.map((user) => (
     <DialogItem key={user.id} user={user} />
   ));

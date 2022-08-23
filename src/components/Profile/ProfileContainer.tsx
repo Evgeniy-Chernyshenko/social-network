@@ -1,30 +1,36 @@
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { actions } from "../../redux/profile-reducer";
-import { StoreContext } from "../../StoreContext";
+import { AppStateType } from "../../redux/redux-store";
 import { Profile } from "./Profile";
 
-export function ProfileContainer() {
-  return (
-    <StoreContext.Consumer>
-      {(store) => {
-        const state = store.getState();
+type MapStateToPropsReturnType = {
+  posts: AppStateType["profilePage"]["posts"];
+  newPostText: AppStateType["profilePage"]["newPostText"];
+};
 
-        const updateNewPostTexCallback = (newPostText: string) => {
-          store.dispatch(actions.updateNewPostTextAC(newPostText));
-        };
+type MapDispatchToPropsReturnType = {
+  updateNewPostTexCallback: (newPostText: string) => void;
+  addPostCallback: () => void;
+};
 
-        const addPostCallback = () => {
-          store.dispatch(actions.addPostAC());
-        };
+export type ProfilePropsType = MapStateToPropsReturnType &
+  MapDispatchToPropsReturnType;
 
-        return (
-          <Profile
-            posts={state.profilePage.posts}
-            newPostText={state.profilePage.newPostText}
-            updateNewPostTexCallback={updateNewPostTexCallback}
-            addPostCallback={addPostCallback}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  );
-}
+const mapStateToProps = (state: AppStateType): MapStateToPropsReturnType => ({
+  posts: state.profilePage.posts,
+  newPostText: state.profilePage.newPostText,
+});
+
+const mapDispatchToProps = (
+  dispatch: Dispatch
+): MapDispatchToPropsReturnType => ({
+  updateNewPostTexCallback: (newPostText: string) =>
+    dispatch(actions.updateNewPostTextAC(newPostText)),
+  addPostCallback: () => dispatch(actions.addPostAC()),
+});
+
+export const ProfileContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);

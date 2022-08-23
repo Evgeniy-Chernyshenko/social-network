@@ -1,8 +1,8 @@
-import { StateType } from "../../../redux/redux-store";
+import { AppStateType } from "../../../redux/redux-store";
 import styles from "./MessageItem.module.css";
 
 type PropsType = {
-  message: StateType["dialogsPage"]["messages"][number];
+  message: AppStateType["dialogsPage"]["messages"][number];
 };
 
 export function MessageItem(props: PropsType) {

@@ -1,6 +1,6 @@
 import { InferActionTypes } from "./redux-store";
 
-type InitialStateType = typeof initialState;
+type StateType = typeof initialState;
 type ActionTypes = InferActionTypes<typeof actions>;
 
 const initialState = {
@@ -51,31 +51,33 @@ const initialState = {
 };
 
 export function dialogsReducer(
-  state: InitialStateType = initialState,
+  state: StateType = initialState,
   action: ActionTypes
-) {
+): StateType {
   switch (action.type) {
     case "UPDATE-NEW-MESSAGE-TEXT": {
-      state.newMessageText = action.text;
-
-      return state;
+      return { ...state, newMessageText: action.text };
     }
 
     case "ADD-MESSAGE": {
       const clearText = state.newMessageText.trim();
 
-      if (clearText) {
-        state.messages.push({
-          id: Date.now(),
-          userPic:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbz8f-cdfPQtfH1EP3x1V2pMDyLpDMmuzKbg&usqp=CAU",
-          userName: "User name 1",
-          text: clearText,
-        });
-        state.newMessageText = "";
-      }
-
-      return state;
+      return clearText
+        ? {
+            ...state,
+            messages: [
+              ...state.messages,
+              {
+                id: Date.now(),
+                userPic:
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbz8f-cdfPQtfH1EP3x1V2pMDyLpDMmuzKbg&usqp=CAU",
+                userName: "User name 1",
+                text: clearText,
+              },
+            ],
+            newMessageText: "",
+          }
+        : state;
     }
 
     default: {

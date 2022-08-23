@@ -1,10 +1,10 @@
 import { ChangeEvent } from "react";
-import { StateType } from "../../../redux/redux-store";
+import { AppStateType } from "../../../redux/redux-store";
 import { Post } from "./Post/Post";
 import styles from "./Posts.module.css";
 
 type PropsType = {
-  posts: StateType["profilePage"]["posts"];
+  posts: AppStateType["profilePage"]["posts"];
   newPostText: string;
   updateNewPostTexCallback: (newPostText: string) => void;
   addPostCallback: () => void;

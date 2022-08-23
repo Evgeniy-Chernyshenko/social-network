@@ -10,13 +10,7 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-export const renderEntireTree = () => {
-  root.render(<App store={store} />);
-};
-
-store.subscribe(renderEntireTree);
-
-renderEntireTree();
+root.render(<App store={store} />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -1,6 +1,6 @@
 import { InferActionTypes } from "./redux-store";
 
-type InitialStateType = typeof initialState;
+type StateType = typeof initialState;
 type ActionTypes = InferActionTypes<typeof actions>;
 
 const initialState = {
@@ -13,29 +13,31 @@ const initialState = {
 };
 
 export function profileReducer(
-  state: InitialStateType = initialState,
+  state: StateType = initialState,
   action: ActionTypes
-) {
+): StateType {
   switch (action.type) {
     case "UPDATE-NEW-POST-TEXT": {
-      state.newPostText = action.text;
-
-      return state;
+      return { ...state, newPostText: action.text };
     }
 
     case "ADD-POST": {
       const clearText = state.newPostText.trim();
 
-      if (clearText) {
-        state.posts.push({
-          id: Date.now(),
-          text: clearText,
-          likesCount: 0,
-        });
-        state.newPostText = "";
-      }
-
-      return state;
+      return clearText
+        ? {
+            ...state,
+            posts: [
+              ...state.posts,
+              {
+                id: Date.now(),
+                text: clearText,
+                likesCount: 0,
+              },
+            ],
+            newPostText: "",
+          }
+        : state;
     }
 
     default: {

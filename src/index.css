@@ -5,6 +5,9 @@ html {
 body {
   font: 1.6rem sans-serif;
   color: #232323;
+}
+
+body * {
   line-height: 160%;
 }
 

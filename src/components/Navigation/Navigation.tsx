@@ -21,6 +21,14 @@ export function Navigation() {
             Dialogs
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            className={({ isActive }) => (isActive ? styles.active : "")}
+            to="/users"
+          >
+            Users
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );
