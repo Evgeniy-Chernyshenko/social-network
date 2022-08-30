@@ -3,14 +3,16 @@ import { InferActionTypes } from "./redux-store";
 type StateType = typeof initialState;
 type ActionTypes = InferActionTypes<typeof actions>;
 
-type UserType = {
-  id: number;
+export type UserType = {
   name: string;
-  userPic: string;
-  statusText: string;
-  country: string;
-  city: string;
-  isFollowed: boolean;
+  id: number;
+  uniqueUrlName: null | string;
+  photos: {
+    small: null | string;
+    large: null | string;
+  };
+  status: null | string;
+  followed: boolean;
 };
 
 const initialState = {
@@ -26,7 +28,7 @@ export const usersReducer = (
       return {
         ...state,
         users: state.users.map((u) =>
-          u.id === action.userId ? { ...u, isFollowed: true } : u
+          u.id === action.userId ? { ...u, followed: true } : u
         ),
       };
     }
@@ -35,13 +37,12 @@ export const usersReducer = (
       return {
         ...state,
         users: state.users.map((u) =>
-          u.id === action.userId ? { ...u, isFollowed: false } : u
+          u.id === action.userId ? { ...u, followed: false } : u
         ),
       };
     }
 
     case "SET_USERS": {
-      debugger;
       return { ...state, users: action.users };
     }
 

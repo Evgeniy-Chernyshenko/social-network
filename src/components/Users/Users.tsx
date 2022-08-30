@@ -1,65 +1,49 @@
 import { UsersPropsType } from "./UsersContainer";
 import styles from "./Users.module.css";
+import axios from "axios";
+import { UserType } from "../../redux/users-reducer";
+import mockUserpic from "../../assets/images/mock-userpic.jpg";
+import { Component } from "react";
 
-export function Users(props: UsersPropsType) {
-  !props.users.length &&
-    props.setUsers([
-      {
-        id: 1,
-        name: "Dmitriy",
-        userPic:
-          "https://vokrug.tv/pic/news/d/f/b/8/dfb86cf78688546ab6836cd084cfbc34.jpg",
-        statusText: "I'm a Boss",
-        country: "Belarus",
-        city: "Minsk",
-        isFollowed: false,
-      },
-      {
-        id: 2,
-        name: "Petr",
-        userPic:
-          "https://vokrug.tv/pic/news/d/f/b/8/dfb86cf78688546ab6836cd084cfbc34.jpg",
-        statusText: "I'm a Boss too",
-        country: "Russia",
-        city: "Moscow",
-        isFollowed: true,
-      },
-      {
-        id: 3,
-        name: "Igor",
-        userPic:
-          "https://vokrug.tv/pic/news/d/f/b/8/dfb86cf78688546ab6836cd084cfbc34.jpg",
-        statusText: "I'm a Boss too...",
-        country: "Ukraine",
-        city: "Kiev",
-        isFollowed: false,
-      },
-    ]);
+type UsersResponseType = {
+  items: UserType[];
+};
 
-  return (
+export class Users extends Component<UsersPropsType> {
+  componentDidMount() {
+    axios
+      .get<UsersResponseType>(
+        "https://social-network.samuraijs.com/api/1.0/users"
+      )
+      .then((response) => this.props.setUsers(response.data.items));
+  }
+
+  render = () => (
     <div className={styles.container}>
       <h2>Users</h2>
 
       <ul>
-        {props.users.map((u) => (
+        {this.props.users.map((u) => (
           <li key={u.id}>
             <div>
-              <img src={u.userPic} alt={u.name} />
-              {u.isFollowed ? (
-                <button onClick={() => props.unfollow(u.id)}>unfollow</button>
+              <img src={u.photos.small || mockUserpic} alt={u.name} />
+              {u.followed ? (
+                <button onClick={() => this.props.unfollow(u.id)}>
+                  unfollow
+                </button>
               ) : (
-                <button onClick={() => props.follow(u.id)}>follow</button>
+                <button onClick={() => this.props.follow(u.id)}>follow</button>
               )}
             </div>
             <div>
               <div className={styles.userInfo}>
                 <div className={styles.userName}>{u.name}</div>
-                <div className={styles.userStatus}>{u.statusText}</div>
+                <div className={styles.userStatus}>{u.status}</div>
               </div>
-              <div className={styles.userLocation}>
+              {/* <div className={styles.userLocation}>
                 <div>{u.country}</div>
                 <div>{u.city}</div>
-              </div>
+              </div> */}
             </div>
           </li>
         ))}
