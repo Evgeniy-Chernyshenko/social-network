@@ -10,10 +10,7 @@ export function DialogItem(props: PropsType) {
   return (
     <li className={styles.container}>
       <img src={props.user.userPic} alt={props.user.name} />
-      <NavLink
-        to={`/dialogs/${props.user.id}`}
-        className={({ isActive }) => (isActive ? styles.active : "")}
-      >
+      <NavLink to={`/dialogs/${props.user.id}`} activeClassName={styles.active}>
         {props.user.name}
       </NavLink>
     </li>

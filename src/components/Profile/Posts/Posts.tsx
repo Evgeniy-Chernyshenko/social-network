@@ -5,9 +5,9 @@ import styles from "./Posts.module.css";
 
 type PropsType = {
   posts: AppStateType["profilePage"]["posts"];
-  newPostText: string;
-  updateNewPostTexCallback: (newPostText: string) => void;
-  addPostCallback: () => void;
+  newPostText: AppStateType["profilePage"]["newPostText"];
+  updateNewPostText: (newPostText: string) => void;
+  addPost: () => void;
 };
 
 export function Posts(props: PropsType) {
@@ -16,11 +16,11 @@ export function Posts(props: PropsType) {
   ));
 
   const changeNewPostTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.updateNewPostTexCallback(e.currentTarget.value);
+    props.updateNewPostText(e.currentTarget.value);
   };
 
   const onAddPostClickHandler = () => {
-    props.addPostCallback();
+    props.addPost();
   };
 
   return (

@@ -1,6 +1,21 @@
+import { AppStateType } from "../../../redux/redux-store";
+import { Preloader } from "../../common/Preloader/Preloader";
 import styles from "./ProfileInfo.module.css";
+import mockUserpic from "../../../assets/images/mock-userpic.jpg";
 
-export function ProfileInfo() {
+type PropsType = {
+  profile: AppStateType["profilePage"]["profile"];
+};
+
+export function ProfileInfo(props: PropsType) {
+  if (!props.profile) {
+    return <Preloader />;
+  }
+
+  const contacts = Object.entries(props.profile.contacts).filter(
+    ([, contactValue]) => contactValue
+  );
+
   return (
     <div>
       <img
@@ -10,17 +25,29 @@ export function ProfileInfo() {
       />
 
       <div className={styles.userInfo}>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbz8f-cdfPQtfH1EP3x1V2pMDyLpDMmuzKbg&usqp=CAU"
-          alt="Userpic"
-        />
+        <img src={props.profile.photos.small || mockUserpic} alt="Userpic" />
         <div>
-          <h1>Evgeniy</h1>
+          <h1>{props.profile.fullName}</h1>
           <ul>
-            <li>Age: 31</li>
-            <li>City: Moscow</li>
-            <li>Education: IT-INCUBATOR</li>
-            <li>Favorite color: green</li>
+            <li>
+              <b>About me:</b> {props.profile.aboutMe}
+            </li>
+            {contacts.length &&
+              contacts.map(([contactName, contactValue]) => (
+                <li key={contactName}>
+                  <>
+                    <b>{contactName}</b>: {contactValue}
+                  </>
+                </li>
+              ))}
+            <li>
+              <b>Looking for a job</b>:{" "}
+              {props.profile.lookingForAJob ? "yes" : "no"}
+            </li>
+            <li>
+              <b>Looking for a job description</b>:{" "}
+              {props.profile.lookingForAJobDescription}
+            </li>
           </ul>
         </div>
       </div>

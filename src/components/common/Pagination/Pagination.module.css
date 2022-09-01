@@ -1,0 +1,38 @@
+.listContainer {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.listItem {
+  background-color: #256bbc;
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  border-radius: 0.6rem;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.listItem:hover {
+  background-color: #0d4381;
+}
+
+.button {
+  background-color: #eaeaea;
+  color: inherit;
+}
+
+.button:hover {
+  background-color: #cdcdcd;
+  color: inherit;
+}
+
+.activeListItem {
+  font-weight: bold;
+  background-color: #0d4381;
+}
+
+.activeListItem:hover {
+  background-color: #0d4381;
+}

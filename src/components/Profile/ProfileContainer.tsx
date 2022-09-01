@@ -1,36 +1,43 @@
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { actions } from "../../redux/profile-reducer";
+import axios from "axios";
+import { Component } from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { profileActions, ProfileType } from "../../redux/profile-reducer";
 import { AppStateType } from "../../redux/redux-store";
 import { Profile } from "./Profile";
 
-type MapStateToPropsReturnType = {
-  posts: AppStateType["profilePage"]["posts"];
-  newPostText: AppStateType["profilePage"]["newPostText"];
-};
+class ProfileAPIContainer extends Component<
+  ConnectedProps<typeof connector> & RouteComponentProps<{ userId: string }>
+> {
+  componentDidMount() {
+    axios
+      .get<ProfileType>(
+        `https://social-network.samuraijs.com/api/1.0/profile/${
+          this.props.match.params.userId || 2
+        }`
+      )
+      .then((response) => {
+        this.props.setProfile(response.data);
+      });
+  }
 
-type MapDispatchToPropsReturnType = {
-  updateNewPostTexCallback: (newPostText: string) => void;
-  addPostCallback: () => void;
-};
+  render() {
+    return (
+      <Profile
+        newPostText={this.props.newPostText}
+        posts={this.props.posts}
+        updateNewPostText={this.props.updateNewPostText}
+        addPost={this.props.addPost}
+        profile={this.props.profile}
+      />
+    );
+  }
+}
 
-export type ProfilePropsType = MapStateToPropsReturnType &
-  MapDispatchToPropsReturnType;
+const mapStateToProps = ({
+  profilePage,
+}: AppStateType): AppStateType["profilePage"] => profilePage;
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsReturnType => ({
-  posts: state.profilePage.posts,
-  newPostText: state.profilePage.newPostText,
-});
+const connector = connect(mapStateToProps, profileActions);
 
-const mapDispatchToProps = (
-  dispatch: Dispatch
-): MapDispatchToPropsReturnType => ({
-  updateNewPostTexCallback: (newPostText: string) =>
-    dispatch(actions.updateNewPostTextAC(newPostText)),
-  addPostCallback: () => dispatch(actions.addPostAC()),
-});
-
-export const ProfileContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Profile);
+export const ProfileContainer = withRouter(connector(ProfileAPIContainer));

@@ -1,53 +1,77 @@
-import { UsersPropsType } from "./UsersContainer";
 import styles from "./Users.module.css";
-import axios from "axios";
-import { UserType } from "../../redux/users-reducer";
 import mockUserpic from "../../assets/images/mock-userpic.jpg";
-import { Component } from "react";
+import { Pagination } from "../common/Pagination/Pagination";
+import { AppStateType } from "../../redux/redux-store";
+import { NavLink } from "react-router-dom";
 
-type UsersResponseType = {
-  items: UserType[];
+type PropsType = {
+  users: AppStateType["usersPage"]["users"];
+  totalCount: AppStateType["usersPage"]["totalCount"];
+  currentPage: AppStateType["usersPage"]["currentPage"];
+  pageSize: AppStateType["usersPage"]["pageSize"];
+  follow: (userId: number) => void;
+  unfollow: (userId: number) => void;
+  onChangePage: (page: number) => void;
 };
 
-export class Users extends Component<UsersPropsType> {
-  componentDidMount() {
-    axios
-      .get<UsersResponseType>(
-        "https://social-network.samuraijs.com/api/1.0/users"
-      )
-      .then((response) => this.props.setUsers(response.data.items));
-  }
-
-  render = () => (
-    <div className={styles.container}>
-      <h2>Users</h2>
-
-      <ul>
-        {this.props.users.map((u) => (
-          <li key={u.id}>
+export function Users(props: PropsType) {
+  return (
+    <>
+      <h2 className={styles.pageTitle}>Users</h2>
+      <Pagination
+        currentPage={props.currentPage}
+        pageSize={props.pageSize}
+        paginationMaxSize={5}
+        totalCount={props.totalCount}
+        className={styles.paginationTop}
+        onChangePage={props.onChangePage}
+      />
+      <ul className={styles.listContainer}>
+        {props.users.map((u) => (
+          <li key={u.id} className={styles.listItem}>
             <div>
-              <img src={u.photos.small || mockUserpic} alt={u.name} />
+              <NavLink to={`/profile/${u.id}`}>
+                <img
+                  src={u.photos.small || mockUserpic}
+                  alt={u.name}
+                  className={styles.userpic}
+                />
+              </NavLink>
               {u.followed ? (
-                <button onClick={() => this.props.unfollow(u.id)}>
+                <button
+                  onClick={() => props.unfollow(u.id)}
+                  className={styles.followUnfollowButton}
+                >
                   unfollow
                 </button>
               ) : (
-                <button onClick={() => this.props.follow(u.id)}>follow</button>
+                <button
+                  onClick={() => props.follow(u.id)}
+                  className={styles.followUnfollowButton}
+                >
+                  follow
+                </button>
               )}
             </div>
             <div>
               <div className={styles.userInfo}>
-                <div className={styles.userName}>{u.name}</div>
+                <NavLink to={`/profile/${u.id}`}>
+                  <div className={styles.userName}>{u.name}</div>
+                </NavLink>
                 <div className={styles.userStatus}>{u.status}</div>
               </div>
-              {/* <div className={styles.userLocation}>
-                <div>{u.country}</div>
-                <div>{u.city}</div>
-              </div> */}
             </div>
           </li>
         ))}
       </ul>
-    </div>
+      <Pagination
+        currentPage={props.currentPage}
+        pageSize={props.pageSize}
+        paginationMaxSize={5}
+        totalCount={props.totalCount}
+        className={styles.paginationBottom}
+        onChangePage={props.onChangePage}
+      />
+    </>
   );
 }

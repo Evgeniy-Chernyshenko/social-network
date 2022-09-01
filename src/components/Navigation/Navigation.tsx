@@ -6,26 +6,17 @@ export function Navigation() {
     <nav className={styles.navigation}>
       <ul>
         <li>
-          <NavLink
-            className={({ isActive }) => (isActive ? styles.active : "")}
-            to="/"
-          >
+          <NavLink activeClassName={styles.active} to="/profile">
             Profile
           </NavLink>
         </li>
         <li>
-          <NavLink
-            className={({ isActive }) => (isActive ? styles.active : "")}
-            to="/dialogs"
-          >
+          <NavLink activeClassName={styles.active} to="/dialogs">
             Dialogs
           </NavLink>
         </li>
         <li>
-          <NavLink
-            className={({ isActive }) => (isActive ? styles.active : "")}
-            to="/users"
-          >
+          <NavLink activeClassName={styles.active} to="/users">
             Users
           </NavLink>
         </li>

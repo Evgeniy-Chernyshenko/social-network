@@ -1,16 +1,24 @@
+import { AppStateType } from "../../redux/redux-store";
 import { Posts } from "./Posts/Posts";
-import { ProfilePropsType } from "./ProfileContainer";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
 
-export function Profile(props: ProfilePropsType) {
+type PropsType = {
+  posts: AppStateType["profilePage"]["posts"];
+  newPostText: AppStateType["profilePage"]["newPostText"];
+  profile: AppStateType["profilePage"]["profile"];
+  updateNewPostText: (text: string) => void;
+  addPost: () => void;
+};
+
+export function Profile(props: PropsType) {
   return (
     <>
-      <ProfileInfo />
+      <ProfileInfo profile={props.profile} />
       <Posts
         posts={props.posts}
         newPostText={props.newPostText}
-        updateNewPostTexCallback={props.updateNewPostTexCallback}
-        addPostCallback={props.addPostCallback}
+        updateNewPostText={props.updateNewPostText}
+        addPost={props.addPost}
       />
     </>
   );

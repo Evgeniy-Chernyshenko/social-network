@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { actions } from "../../redux/dialogs-reducer";
+import { dialogsActions } from "../../redux/dialogs-reducer";
 import { AppStateType } from "../../redux/redux-store";
 import { Dialogs } from "./Dialogs";
 
@@ -24,10 +24,10 @@ const mapDispatchToProps = (
   dispatch: Dispatch
 ): MapDispatchToPropsReturnType => ({
   updateNewMessageTextCallback: (newMessageText) => {
-    dispatch(actions.updateNewMessageTextAC(newMessageText));
+    dispatch(dialogsActions.updateNewMessageTextAC(newMessageText));
   },
   addMessageCallback: () => {
-    dispatch(actions.addMessageAC());
+    dispatch(dialogsActions.addMessageAC());
   },
 });
 

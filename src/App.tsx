@@ -1,6 +1,6 @@
 import { Header } from "./components/Header/Header";
 import { Navigation } from "./components/Navigation/Navigation";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { StoreType } from "./redux/redux-store";
 import { ProfileContainer } from "./components/Profile/ProfileContainer";
 import { DialogsContainer } from "./components/Dialogs/DialogsContainer";
@@ -20,13 +20,20 @@ function App(props: PropsType) {
           <Navigation />
 
           <main className="content">
-            <Routes>
-              <Route index element={<ProfileContainer />} />
-              <Route path="/users" element={<UsersContainer />} />
-              <Route path="/dialogs" element={<DialogsContainer />}>
-                <Route path=":userId" element={<DialogsContainer />} />
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/profile" />
               </Route>
-            </Routes>
+              <Route exact path="/profile/:userId?">
+                <ProfileContainer />
+              </Route>
+              <Route exact path="/users">
+                <UsersContainer />
+              </Route>
+              <Route exact path="/dialogs/:userId?">
+                <DialogsContainer />
+              </Route>
+            </Switch>
           </main>
         </div>
       </Provider>

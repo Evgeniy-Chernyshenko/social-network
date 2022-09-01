@@ -20,6 +20,5 @@ const rootReducer = combineReducers({
 });
 export const store = createStore(rootReducer);
 
-const state = store.getState();
 // @ts-ignore
-window.state = state;
+window.store = store;
