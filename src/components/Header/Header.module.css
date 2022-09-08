@@ -1,4 +1,11 @@
 .header {
   grid-area: header;
   background-color: #256bbc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu {
+  padding: 0 3rem;
 }

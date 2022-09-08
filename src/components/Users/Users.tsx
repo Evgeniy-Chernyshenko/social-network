@@ -9,8 +9,9 @@ type PropsType = {
   totalCount: AppStateType["usersPage"]["totalCount"];
   currentPage: AppStateType["usersPage"]["currentPage"];
   pageSize: AppStateType["usersPage"]["pageSize"];
-  follow: (userId: number) => void;
-  unfollow: (userId: number) => void;
+  fetchingInProgress: AppStateType["usersPage"]["fetchingInProgress"];
+  followUser: (userId: number) => void;
+  unfollowUser: (userId: number) => void;
   onChangePage: (page: number) => void;
 };
 
@@ -39,14 +40,20 @@ export function Users(props: PropsType) {
               </NavLink>
               {u.followed ? (
                 <button
-                  onClick={() => props.unfollow(u.id)}
+                  disabled={props.fetchingInProgress.some((v) => v === u.id)}
+                  onClick={() => {
+                    props.unfollowUser(u.id);
+                  }}
                   className={styles.followUnfollowButton}
                 >
                   unfollow
                 </button>
               ) : (
                 <button
-                  onClick={() => props.follow(u.id)}
+                  disabled={props.fetchingInProgress.some((v) => v === u.id)}
+                  onClick={() => {
+                    props.followUser(u.id);
+                  }}
                   className={styles.followUnfollowButton}
                 >
                   follow

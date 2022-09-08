@@ -24,6 +24,12 @@
   background-color: #0d4381;
 }
 
+.followUnfollowButton:disabled {
+  background-color: #e8e8e8;
+  color: #9c9c9c;
+  cursor: not-allowed;
+}
+
 .userpic {
   width: 8rem;
   height: 8rem;

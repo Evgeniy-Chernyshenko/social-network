@@ -1,7 +1,7 @@
 import { InferActionTypes } from "./redux-store";
 
 type StateType = typeof initialState;
-type ActionTypes = InferActionTypes<typeof dialogsActions>;
+export type DialogsActionTypes = InferActionTypes<typeof dialogsActions>;
 
 const initialState = {
   users: [
@@ -52,7 +52,7 @@ const initialState = {
 
 export function dialogsReducer(
   state: StateType = initialState,
-  action: ActionTypes
+  action: DialogsActionTypes
 ): StateType {
   switch (action.type) {
     case "UPDATE-NEW-MESSAGE-TEXT": {

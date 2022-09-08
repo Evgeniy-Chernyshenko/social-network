@@ -1,7 +1,9 @@
-import { combineReducers, createStore } from "redux";
-import { dialogsReducer } from "./dialogs-reducer";
-import { profileReducer } from "./profile-reducer";
-import { usersReducer } from "./users-reducer";
+import { applyMiddleware, combineReducers, legacy_createStore } from "redux";
+import { AuthActionTypes, authReducer } from "./auth-reducer";
+import { DialogsActionTypes, dialogsReducer } from "./dialogs-reducer";
+import { ProfileActionTypes, profileReducer } from "./profile-reducer";
+import { UsersActionTypes, usersReducer } from "./users-reducer";
+import thunkMiddleware, { ThunkAction } from "redux-thunk";
 
 export type InferActionTypes<T> = T extends {
   [keys: string]: (...args: any[]) => infer U;
@@ -11,14 +13,31 @@ export type InferActionTypes<T> = T extends {
 
 export type AppStateType = ReturnType<typeof rootReducer>;
 
+type AppActionsType =
+  | UsersActionTypes
+  | ProfileActionTypes
+  | DialogsActionTypes
+  | AuthActionTypes;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppStateType,
+  unknown,
+  AppActionsType
+>;
+
 export type StoreType = typeof store;
 
 const rootReducer = combineReducers({
   dialogsPage: dialogsReducer,
   profilePage: profileReducer,
   usersPage: usersReducer,
+  auth: authReducer,
 });
-export const store = createStore(rootReducer);
+export const store = legacy_createStore(
+  rootReducer,
+  applyMiddleware(thunkMiddleware)
+);
 
 // @ts-ignore
 window.store = store;

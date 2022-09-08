@@ -14,10 +14,13 @@ type MapDispatchToPropsReturnType = {
 };
 
 export type DialogsPropsType = MapStateToPropsReturnType &
-  MapDispatchToPropsReturnType;
+  MapDispatchToPropsReturnType & { isAuth: boolean };
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsReturnType => ({
+const mapStateToProps = (
+  state: AppStateType
+): MapStateToPropsReturnType & { isAuth: boolean } => ({
   dialogsPage: state.dialogsPage,
+  isAuth: !!state.auth.authData.id,
 });
 
 const mapDispatchToProps = (

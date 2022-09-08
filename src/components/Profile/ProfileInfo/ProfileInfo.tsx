@@ -16,6 +16,8 @@ export function ProfileInfo(props: PropsType) {
     ([, contactValue]) => contactValue
   );
 
+  console.log(contacts);
+
   return (
     <div>
       <img
@@ -32,7 +34,7 @@ export function ProfileInfo(props: PropsType) {
             <li>
               <b>About me:</b> {props.profile.aboutMe}
             </li>
-            {contacts.length &&
+            {!!contacts.length &&
               contacts.map(([contactName, contactValue]) => (
                 <li key={contactName}>
                   <>

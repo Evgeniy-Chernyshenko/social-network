@@ -1,4 +1,5 @@
-import { InferActionTypes } from "./redux-store";
+import { api } from "../api/api";
+import { AppThunk, InferActionTypes } from "./redux-store";
 
 type PostType = {
   id: number;
@@ -24,7 +25,8 @@ type StateType = {
   newPostText: string;
   profile: null | ProfileType;
 };
-type ActionTypes = InferActionTypes<typeof profileActions>;
+
+export type ProfileActionTypes = InferActionTypes<typeof profileActions>;
 
 const initialState: StateType = {
   posts: [
@@ -38,7 +40,7 @@ const initialState: StateType = {
 
 export function profileReducer(
   state: StateType = initialState,
-  action: ActionTypes
+  action: ProfileActionTypes
 ): StateType {
   switch (action.type) {
     case "UPDATE-NEW-POST-TEXT": {
@@ -84,4 +86,11 @@ export const profileActions = {
     type: "SET_PROFILE" as const,
     profile,
   }),
+};
+
+export const profileThunks = {
+  setUserProfile:
+    (userId: number): AppThunk =>
+    async (dispatch) =>
+      dispatch(profileActions.setProfile(await api.profile.getProfile(userId))),
 };
