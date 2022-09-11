@@ -1,4 +1,16 @@
-.pageTitle {
+.container {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container h2 {
   font-size: 3rem;
-  margin-bottom: 3rem;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
 }

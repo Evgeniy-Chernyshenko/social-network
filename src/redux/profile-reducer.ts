@@ -24,6 +24,7 @@ type StateType = {
   posts: PostType[];
   newPostText: string;
   profile: null | ProfileType;
+  status: null | string;
 };
 
 export type ProfileActionTypes = InferActionTypes<typeof profileActions>;
@@ -36,6 +37,7 @@ const initialState: StateType = {
   ],
   newPostText: "",
   profile: null,
+  status: null,
 };
 
 export function profileReducer(
@@ -70,6 +72,10 @@ export function profileReducer(
       return { ...state, profile: action.profile };
     }
 
+    case "SET_STATUS": {
+      return { ...state, status: action.status };
+    }
+
     default: {
       return state;
     }
@@ -86,6 +92,10 @@ export const profileActions = {
     type: "SET_PROFILE" as const,
     profile,
   }),
+  setStatus: (status: string) => ({
+    type: "SET_STATUS" as const,
+    status,
+  }),
 };
 
 export const profileThunks = {
@@ -93,4 +103,16 @@ export const profileThunks = {
     (userId: number): AppThunk =>
     async (dispatch) =>
       dispatch(profileActions.setProfile(await api.profile.getProfile(userId))),
+  getUserStatus:
+    (userId: number): AppThunk =>
+    async (dispatch) =>
+      dispatch(profileActions.setStatus(await api.profile.getStatus(userId))),
+  setStatus:
+    (status: string): AppThunk =>
+    async (dispatch) => {
+      const responseData = await api.profile.setStatus(status);
+
+      responseData.resultCode === 0 &&
+        dispatch(profileActions.setStatus(status));
+    },
 };

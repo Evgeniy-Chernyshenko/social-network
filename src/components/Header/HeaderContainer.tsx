@@ -1,28 +1,22 @@
 import { Component } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { authActions, authThunks } from "../../redux/auth-reducer";
+import { authThunks } from "../../redux/auth-reducer";
 import { AppStateType } from "../../redux/redux-store";
 import { Header } from "./Header";
 
 class HeaderAPIContainer extends Component<ConnectedProps<typeof connector>> {
   componentDidMount() {
-    this.props.setAuthAndProfile();
+    this.props.setAuth();
   }
 
   render() {
-    return (
-      <Header
-        userId={this.props.authData.id}
-        login={this.props.authData.login}
-        userpic={this.props.profile?.photos.small || null}
-      />
-    );
+    return <Header login={this.props.authData.login} />;
   }
 }
 
 const mapStateToProps = (state: AppStateType): AppStateType["auth"] =>
   state.auth;
 
-const connector = connect(mapStateToProps, { ...authActions, ...authThunks });
+const connector = connect(mapStateToProps, { ...authThunks });
 
 export const HeaderContainer = connector(HeaderAPIContainer);

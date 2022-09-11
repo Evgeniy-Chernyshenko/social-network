@@ -4,9 +4,7 @@ type PropsType = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLUListElement>,
   HTMLUListElement
 > & {
-  userId: null | number;
   login: null | string;
-  userpic: null | string;
 };
 
 export function Menu(props: PropsType) {
@@ -18,14 +16,7 @@ export function Menu(props: PropsType) {
   return (
     <ul className={className}>
       <li className={styles.userItem}>
-        {props.login ? (
-          <>
-            {props.login}
-            {props.userpic && <img src={props.userpic} alt={props.login} />}
-          </>
-        ) : (
-          <>Login</>
-        )}
+        {props.login ? <>{props.login}</> : <>Login</>}
       </li>
     </ul>
   );

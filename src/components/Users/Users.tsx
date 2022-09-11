@@ -16,6 +16,7 @@ type PropsType = {
 };
 
 export function Users(props: PropsType) {
+  // TODO: сделать пагинацию в роутере users/1, users/2 и т.д., чтобы можно было нажимать назад и попадать на предыдущую страницу
   return (
     <>
       <h2 className={styles.pageTitle}>Users</h2>

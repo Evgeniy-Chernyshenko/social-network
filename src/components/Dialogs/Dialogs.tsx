@@ -1,5 +1,4 @@
 import { ChangeEvent } from "react";
-import { Redirect } from "react-router-dom";
 import { DialogItem } from "./DialogItem/DialogItem";
 import styles from "./Dialogs.module.css";
 import { DialogsPropsType } from "./DialogsContainer";
@@ -20,10 +19,6 @@ export function Dialogs(props: DialogsPropsType) {
   const onAddMessageClickHandler = () => {
     props.addMessageCallback();
   };
-
-  if (!props.isAuth) {
-    return <Redirect to={"/login"} />;
-  }
 
   return (
     <div className={styles.dialogs}>

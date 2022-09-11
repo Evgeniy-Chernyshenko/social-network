@@ -1,10 +1,11 @@
-import { Component } from "react";
+import { Component, ComponentType } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
 import { usersActions, usersThunks } from "../../redux/users-reducer";
 import { Users } from "./Users";
 import { Preloader } from "../common/Preloader/Preloader";
-import { Redirect } from "react-router-dom";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { compose } from "redux";
 
 class UsersAPIContainer extends Component<ConnectedProps<typeof connector>> {
   componentDidMount() {
@@ -16,10 +17,6 @@ class UsersAPIContainer extends Component<ConnectedProps<typeof connector>> {
   };
 
   render() {
-    if (!this.props.isAuth) {
-      return <Redirect to={"/login"} />;
-    }
-
     return (
       <>
         {this.props.isLoading && <Preloader />}
@@ -40,16 +37,13 @@ class UsersAPIContainer extends Component<ConnectedProps<typeof connector>> {
   }
 }
 
-const mapStateToProps = (
-  state: AppStateType
-): AppStateType["usersPage"] & { isAuth: boolean } => ({
+const mapStateToProps = (state: AppStateType): AppStateType["usersPage"] => ({
   users: state.usersPage.users,
   totalCount: state.usersPage.totalCount,
   currentPage: state.usersPage.currentPage,
   pageSize: state.usersPage.pageSize,
   isLoading: state.usersPage.isLoading,
   fetchingInProgress: state.usersPage.fetchingInProgress,
-  isAuth: !!state.auth.authData.id,
 });
 
 const connector = connect(mapStateToProps, {
@@ -57,4 +51,7 @@ const connector = connect(mapStateToProps, {
   ...usersThunks,
 });
 
-export const UsersContainer = connector(UsersAPIContainer);
+export const UsersContainer = compose<ComponentType>(
+  connector,
+  withAuthRedirect
+)(UsersAPIContainer);

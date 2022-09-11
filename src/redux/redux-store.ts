@@ -4,6 +4,7 @@ import { DialogsActionTypes, dialogsReducer } from "./dialogs-reducer";
 import { ProfileActionTypes, profileReducer } from "./profile-reducer";
 import { UsersActionTypes, usersReducer } from "./users-reducer";
 import thunkMiddleware, { ThunkAction } from "redux-thunk";
+import { reducer as formReducer } from "redux-form";
 
 export type InferActionTypes<T> = T extends {
   [keys: string]: (...args: any[]) => infer U;
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   profilePage: profileReducer,
   usersPage: usersReducer,
   auth: authReducer,
+  form: formReducer,
 });
 export const store = legacy_createStore(
   rootReducer,
