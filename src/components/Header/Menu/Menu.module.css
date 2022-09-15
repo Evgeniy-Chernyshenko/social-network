@@ -1,6 +1,13 @@
 .container {
-  color: #fff;
   display: flex;
   flex-wrap: wrap;
   gap: 3rem;
+}
+
+.container * {
+  color: #fff;
+}
+
+.container li:not(.userItem) {
+  cursor: pointer;
 }

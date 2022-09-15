@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { api } from "../api/api";
 import { AppThunk, InferActionTypes } from "./redux-store";
 
@@ -55,6 +56,11 @@ export const authThunks = {
       const authData = await api.auth.login(email, password, rememberMe);
 
       if (authData.resultCode !== 0) {
+        dispatch(
+          stopSubmit("login", {
+            _error: authData.messages[0] || "Some error",
+          })
+        );
         return;
       }
 
@@ -66,4 +72,19 @@ export const authThunks = {
         })
       );
     },
+  logout: (): AppThunk => async (dispatch) => {
+    const authData = await api.auth.logout();
+
+    if (authData.resultCode !== 0) {
+      return;
+    }
+
+    dispatch(
+      authActions.setAuth({
+        id: null,
+        email: null,
+        login: null,
+      })
+    );
+  },
 };

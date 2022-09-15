@@ -1,0 +1,14 @@
+.item {
+  background-color: #256bbc;
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 0.6rem;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+  margin-bottom: 3rem;
+}
+
+.item:hover {
+  background-color: #0d4381;
+}

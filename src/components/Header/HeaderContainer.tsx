@@ -9,8 +9,18 @@ class HeaderAPIContainer extends Component<ConnectedProps<typeof connector>> {
     this.props.setAuth();
   }
 
+  componentDidUpdate() {
+    if (!this.props.authData.login && this.props.authData.id) {
+      this.props.setAuth();
+    }
+  }
+
   render() {
-    return <Header login={this.props.authData.login} />;
+    console.log("render HeaderContainer");
+
+    return (
+      <Header login={this.props.authData.login} logout={this.props.logout} />
+    );
   }
 }
 

@@ -22,7 +22,6 @@ export type ProfileType = {
 
 type StateType = {
   posts: PostType[];
-  newPostText: string;
   profile: null | ProfileType;
   status: null | string;
 };
@@ -35,7 +34,6 @@ const initialState: StateType = {
     { id: 2, text: "Post 1", likesCount: 2 },
     { id: 3, text: "Post 1", likesCount: 3 },
   ],
-  newPostText: "",
   profile: null,
   status: null,
 };
@@ -45,27 +43,18 @@ export function profileReducer(
   action: ProfileActionTypes
 ): StateType {
   switch (action.type) {
-    case "UPDATE-NEW-POST-TEXT": {
-      return { ...state, newPostText: action.text };
-    }
-
     case "ADD-POST": {
-      const clearText = state.newPostText.trim();
-
-      return clearText
-        ? {
-            ...state,
-            posts: [
-              ...state.posts,
-              {
-                id: Date.now(),
-                text: clearText,
-                likesCount: 0,
-              },
-            ],
-            newPostText: "",
-          }
-        : state;
+      return {
+        ...state,
+        posts: [
+          ...state.posts,
+          {
+            id: Date.now(),
+            text: action.newPostText,
+            likesCount: 0,
+          },
+        ],
+      };
     }
 
     case "SET_PROFILE": {
@@ -83,11 +72,10 @@ export function profileReducer(
 }
 
 export const profileActions = {
-  updateNewPostText: (text: string) => ({
-    type: "UPDATE-NEW-POST-TEXT" as const,
-    text,
+  addPost: (newPostText: string) => ({
+    type: "ADD-POST" as const,
+    newPostText,
   }),
-  addPost: () => ({ type: "ADD-POST" as const }),
   setProfile: (profile: ProfileType) => ({
     type: "SET_PROFILE" as const,
     profile,

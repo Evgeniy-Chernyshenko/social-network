@@ -1,11 +1,9 @@
-import { Component, ComponentType } from "react";
+import { Component } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
 import { usersActions, usersThunks } from "../../redux/users-reducer";
 import { Users } from "./Users";
 import { Preloader } from "../common/Preloader/Preloader";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect";
-import { compose } from "redux";
 
 class UsersAPIContainer extends Component<ConnectedProps<typeof connector>> {
   componentDidMount() {
@@ -51,7 +49,4 @@ const connector = connect(mapStateToProps, {
   ...usersThunks,
 });
 
-export const UsersContainer = compose<ComponentType>(
-  connector,
-  withAuthRedirect
-)(UsersAPIContainer);
+export const UsersContainer = connector(UsersAPIContainer);

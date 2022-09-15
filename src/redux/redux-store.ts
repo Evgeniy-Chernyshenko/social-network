@@ -4,7 +4,7 @@ import { DialogsActionTypes, dialogsReducer } from "./dialogs-reducer";
 import { ProfileActionTypes, profileReducer } from "./profile-reducer";
 import { UsersActionTypes, usersReducer } from "./users-reducer";
 import thunkMiddleware, { ThunkAction } from "redux-thunk";
-import { reducer as formReducer } from "redux-form";
+import { FormAction, reducer as formReducer } from "redux-form";
 
 export type InferActionTypes<T> = T extends {
   [keys: string]: (...args: any[]) => infer U;
@@ -18,7 +18,8 @@ type AppActionsType =
   | UsersActionTypes
   | ProfileActionTypes
   | DialogsActionTypes
-  | AuthActionTypes;
+  | AuthActionTypes
+  | FormAction;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

@@ -40,13 +40,17 @@ export const api = {
       client
         .get<CommonResponseType1<AuthType>>("auth/me")
         .then((response) => response.data),
-    login: (email: string, password: string, rememberMe: boolean) =>
+    login: (email: string, password: string, rememberMe: boolean = false) =>
       client
         .post<CommonResponseType1<{ userId: number }>>("auth/login", {
           email,
           password,
           rememberMe,
         })
+        .then((response) => response.data),
+    logout: () =>
+      client
+        .delete<CommonResponseType1>("auth/login")
         .then((response) => response.data),
   },
   profile: {

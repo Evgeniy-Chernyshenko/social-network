@@ -4,11 +4,9 @@ import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
 
 type PropsType = {
   posts: AppStateType["profilePage"]["posts"];
-  newPostText: AppStateType["profilePage"]["newPostText"];
   profile: AppStateType["profilePage"]["profile"];
   status: AppStateType["profilePage"]["status"];
-  updateNewPostText: (text: string) => void;
-  addPost: () => void;
+  addPost: (newPostText: string) => void;
   setStatus: (text: string) => void;
 };
 
@@ -20,12 +18,7 @@ export function Profile(props: PropsType) {
         status={props.status}
         setStatus={props.setStatus}
       />
-      <Posts
-        posts={props.posts}
-        newPostText={props.newPostText}
-        updateNewPostText={props.updateNewPostText}
-        addPost={props.addPost}
-      />
+      <Posts posts={props.posts} addPost={props.addPost} />
     </>
   );
 }

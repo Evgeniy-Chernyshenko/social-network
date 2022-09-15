@@ -4,6 +4,8 @@ import { authThunks } from "../../redux/auth-reducer";
 import { connect, ConnectedProps } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
 import { Redirect } from "react-router-dom";
+import { formValidators } from "../../utils/form-validators";
+import { FormControl } from "../common/FormControl/FormControl";
 
 type FormDataType = {
   login: string;
@@ -15,17 +17,30 @@ const LoginForm = (props: InjectedFormProps<FormDataType>) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <h2 className={styles.pageTitle}>Login</h2>
-      <Field name="login" component="input" type="text" placeholder="Login" />
+      <Field
+        name="login"
+        componentType="input"
+        component={FormControl}
+        type="text"
+        placeholder="Login"
+        validate={[formValidators.required]}
+      />
       <Field
         name="password"
-        component="input"
+        componentType="input"
+        component={FormControl}
         type="password"
         placeholder="Password"
+        validate={[formValidators.required]}
       />
-      <label>
-        <Field name="rememberMe" component="input" type="checkbox" /> remember
-        me
-      </label>
+      <Field
+        name="rememberMe"
+        componentType="input"
+        labelText="remember me"
+        component={FormControl}
+        type="checkbox"
+      />
+      {props.error && <div className={styles.error}>{props.error}</div>}
       <button>Submit</button>
     </form>
   );

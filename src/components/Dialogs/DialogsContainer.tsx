@@ -11,8 +11,7 @@ type MapStateToPropsReturnType = {
 };
 
 type MapDispatchToPropsReturnType = {
-  updateNewMessageTextCallback: (newMessageText: string) => void;
-  addMessageCallback: () => void;
+  addMessageCallback: (newMessageText: string) => void;
 };
 
 export type DialogsPropsType = MapStateToPropsReturnType &
@@ -25,11 +24,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsReturnType => ({
 const mapDispatchToProps = (
   dispatch: Dispatch
 ): MapDispatchToPropsReturnType => ({
-  updateNewMessageTextCallback: (newMessageText) => {
-    dispatch(dialogsActions.updateNewMessageTextAC(newMessageText));
-  },
-  addMessageCallback: () => {
-    dispatch(dialogsActions.addMessageAC());
+  addMessageCallback: (newMessageText) => {
+    dispatch(dialogsActions.addMessageAC(newMessageText));
   },
 });
 
