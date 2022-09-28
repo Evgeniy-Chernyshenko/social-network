@@ -34,10 +34,6 @@ a {
   grid-area: content;
 }
 
-.content li {
-  cursor: pointer;
-}
-
 a.active {
   text-decoration: none;
   font-weight: bold;

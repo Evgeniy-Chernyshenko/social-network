@@ -1,6 +1,6 @@
 import { Component, ComponentType } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { profileActions, profileThunks } from "../../redux/profile-reducer";
 import { AppStateType } from "../../redux/redux-store";
@@ -15,6 +15,7 @@ class ProfileAPIContainer extends Component<
     const userId = routeUserId || authId;
 
     if (!userId) {
+      this.props.history.push("/login");
       return;
     }
 

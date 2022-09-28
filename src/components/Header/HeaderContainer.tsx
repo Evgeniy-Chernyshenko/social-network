@@ -5,16 +5,6 @@ import { AppStateType } from "../../redux/redux-store";
 import { Header } from "./Header";
 
 class HeaderAPIContainer extends Component<ConnectedProps<typeof connector>> {
-  componentDidMount() {
-    this.props.setAuth();
-  }
-
-  componentDidUpdate() {
-    if (!this.props.authData.login && this.props.authData.id) {
-      this.props.setAuth();
-    }
-  }
-
   render() {
     console.log("render HeaderContainer");
 

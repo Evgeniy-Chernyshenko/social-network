@@ -41,7 +41,7 @@ export const authActions = {
 };
 
 export const authThunks = {
-  setAuth: (): AppThunk => async (dispatch) => {
+  setAuth: (): AppThunk<Promise<void>> => async (dispatch) => {
     const authData = await api.auth.getAuthData();
 
     if (authData.resultCode !== 0) {

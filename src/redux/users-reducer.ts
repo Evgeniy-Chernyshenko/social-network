@@ -19,7 +19,6 @@ export type UserType = {
 const initialState = {
   users: [] as UserType[],
   totalCount: 0,
-  currentPage: 1,
   pageSize: 10,
   isLoading: true,
   fetchingInProgress: [] as number[],
@@ -54,10 +53,6 @@ export const usersReducer = (
 
     case "SET_TOTAL_COUNT": {
       return { ...state, totalCount: action.totalCount };
-    }
-
-    case "SET_CURRENT_PAGE": {
-      return { ...state, currentPage: action.currentPage };
     }
 
     case "SET_IS_LOADING": {

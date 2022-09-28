@@ -5,6 +5,7 @@ import { ProfileActionTypes, profileReducer } from "./profile-reducer";
 import { UsersActionTypes, usersReducer } from "./users-reducer";
 import thunkMiddleware, { ThunkAction } from "redux-thunk";
 import { FormAction, reducer as formReducer } from "redux-form";
+import { AppActionTypes, appReducer } from "./app-reducer";
 
 export type InferActionTypes<T> = T extends {
   [keys: string]: (...args: any[]) => infer U;
@@ -19,7 +20,8 @@ type AppActionsType =
   | ProfileActionTypes
   | DialogsActionTypes
   | AuthActionTypes
-  | FormAction;
+  | FormAction
+  | AppActionTypes;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -36,6 +38,7 @@ const rootReducer = combineReducers({
   usersPage: usersReducer,
   auth: authReducer,
   form: formReducer,
+  app: appReducer,
 });
 export const store = legacy_createStore(
   rootReducer,
