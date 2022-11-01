@@ -23,7 +23,7 @@ export function authReducer(
   action: AuthActionTypes
 ): StateType {
   switch (action.type) {
-    case "SET_AUTH": {
+    case "auth/SET_AUTH": {
       return { ...state, authData: action.payload };
     }
 
@@ -35,7 +35,7 @@ export function authReducer(
 
 export const authActions = {
   setAuth: (payload: AuthType) => ({
-    type: "SET_AUTH" as const,
+    type: "auth/SET_AUTH" as const,
     payload,
   }),
 };

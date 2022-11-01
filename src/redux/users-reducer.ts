@@ -1,7 +1,7 @@
 import { api } from "../api/api";
 import { AppThunk, InferActionTypes } from "./redux-store";
 
-type StateType = typeof initialState;
+export type StateType = typeof initialState;
 export type UsersActionTypes = InferActionTypes<typeof usersActions>;
 
 export type UserType = {
