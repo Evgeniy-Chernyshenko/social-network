@@ -1,4 +1,9 @@
-import { applyMiddleware, combineReducers, legacy_createStore } from "redux";
+import {
+  applyMiddleware,
+  combineReducers,
+  compose,
+  legacy_createStore,
+} from "redux";
 import { AuthActionTypes, authReducer } from "./auth-reducer";
 import { DialogsActionTypes, dialogsReducer } from "./dialogs-reducer";
 import { ProfileActionTypes, profileReducer } from "./profile-reducer";
@@ -40,9 +45,18 @@ const rootReducer = combineReducers({
   form: formReducer,
   app: appReducer,
 });
+
+// export const store = legacy_createStore(
+//   rootReducer,
+//   applyMiddleware(thunkMiddleware)
+// );
+
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export const store = legacy_createStore(
   rootReducer,
-  applyMiddleware(thunkMiddleware)
+  composeEnhancers(applyMiddleware(thunkMiddleware))
 );
 
 // @ts-ignore
